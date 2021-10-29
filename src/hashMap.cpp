@@ -8,9 +8,24 @@ uint32_t HashMap::hash_func(const std::string &key) const
     {
         sum += key[i];
     }
-    std::cout << "HASH RES > " <<sum % TABLE_SIZE << std::endl; 
+    
     return sum % TABLE_SIZE;
 }
+
+HashMap::HashMap()
+{
+    hash_table = new Node* [TABLE_SIZE];
+}
+
+HashMap::~HashMap()
+{
+    for (int i = 0; i < TABLE_SIZE; i++)
+    {
+        hash_table[i] = NULL;
+    }
+    delete[] hash_table;
+}
+
 
 void HashMap::print()
 {
@@ -23,25 +38,27 @@ void HashMap::print()
         }
         else
         {
-            Node n = *hash_table[i];
-            std::cout << "\t" <<  i << "\t" << n.getValue() << std::endl;
+            Person* value = hash_table[i]->getValue();
+            std::cout << "\t" <<  i << "\t" << value->name << std::endl;
         }
     }
     std::cout << "END" << std::endl;
 }
 
-void HashMap::add(const std::string &key, const std::string &value)
+void HashMap::add(const std::string &key, Person* value)
 {
     uint32_t hash_key = hash_func(key);
+    
+    Node* node = hash_table[hash_key];
 
-    if (hash_table[hash_key] != NULL)
+    if (node != NULL)
     {
         std::cout << "\t >> Colision \n";
     } 
     else 
     {
-        Node n (key, value);
-        hash_table[hash_key] = &n;
+        node = new Node (key, value);
+        hash_table[hash_key] = node;
     }
 }
 
