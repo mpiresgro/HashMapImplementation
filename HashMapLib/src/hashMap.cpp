@@ -1,5 +1,5 @@
 #include <iostream>
-#include "HashMap.h"
+#include "hashMap.h"
 
 uint32_t HashMap::hash_func(const std::string &key) const
 {
@@ -79,6 +79,25 @@ void HashMap::add(const std::string &key, Person* value)
     else // Update value
         node->setValue(value);
 
+}
+
+bool HashMap::get(const std::string& key, Person& value)
+{
+    uint32_t hash_key = hash_func(key);
+    
+    Node *prev = NULL;
+    Node *node = hash_table[hash_key];
+    while(node != NULL && node->getKey() != key)
+    {
+        prev = node;
+        node = node->getNext();
+    }
+    
+    if (node  == NULL) 
+        return false;
+
+    value = *node->getValue();
+    return true;
 }
 
 // return true if successful removal otherwise return false

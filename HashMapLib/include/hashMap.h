@@ -13,6 +13,7 @@ public:
 
     void print() ;
     void add(const std::string& key, Person* value);
+    bool get(const std::string& key, Person& value);
     bool remove(const std::string& key);
 
 private:
