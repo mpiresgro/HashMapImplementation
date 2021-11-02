@@ -18,7 +18,21 @@ public:
         return m_key;
     }
 
+    HashNode<K, V>* getNext()
+    {
+        return m_next;
+    }
+
+    void setNext(HashNode<K, V>* next)
+    {
+        m_next = next;
+    }
     
+    void setValue(const V& value)
+    {
+        m_value = value;
+    }
+
 private:
     K m_key;
     V m_value;
