@@ -14,18 +14,26 @@ uint32_t HashMap::hash_func(const std::string &key) const
 
 HashMap::HashMap()
 {
-    hash_table = new Node* [TABLE_SIZE];
+    hash_table = new Node* [TABLE_SIZE]();
 }
 
 HashMap::~HashMap()
 {
+    Node* prev;
+    Node* node;
     for (int i = 0; i < TABLE_SIZE; i++)
     {
-        hash_table[i] = NULL;
+        node = hash_table[i];
+        while (node != NULL)
+        {
+            prev = node;
+            node = node->getNext();
+            delete prev;
+        };
+        delete node;
     }
     delete[] hash_table;
 }
-
 
 void HashMap::print()
 {
@@ -38,8 +46,9 @@ void HashMap::print()
         }
         else
         {
-            Person* value = hash_table[i]->getValue();
-            std::cout << "\t" <<  i << "\t" << value->name << std::endl;
+            Node* nodeV = hash_table[i];
+            Person* value = nodeV->getValue();
+            std::cout << "\t" <<  i << "\t" << value->name;
         }
     }
     std::cout << "END" << std::endl;
@@ -49,30 +58,54 @@ void HashMap::add(const std::string &key, Person* value)
 {
     uint32_t hash_key = hash_func(key);
     
-    Node* node = hash_table[hash_key];
+    Node *prev = NULL;
+    Node *node = hash_table[hash_key];
 
-    if (node != NULL)
-    {
-        std::cout << "\t >> Colision \n";
-    } 
-    else 
-    {
-        node = new Node (key, value);
-        hash_table[hash_key] = node;
+    while (node != NULL && node->getKey() != key) {
+        prev = node;
+        node = node->getNext();
     }
+
+    if (node == NULL)
+    {
+        // Create new node
+        node = new Node(key, value);
+        
+        if (prev == NULL)
+            hash_table[hash_key] = node;
+        else 
+            prev->setNext(node);
+    }
+    else // Update value
+        node->setValue(value);
+
 }
 
 // return true if successful removal otherwise return false
 bool HashMap::remove(const std::string &key)
 {
     uint32_t hash_key = hash_func(key);
-    if (hash_table[hash_key] != NULL)
+
+    Node *prev = NULL;
+    Node *node = hash_table[hash_key];
+    
+    while(node != NULL && node->getKey() != key)
     {
-        hash_table[hash_key] = NULL;
-        return true;
+        prev = node;
+        node = node->getNext();
     }
-    else
+    if (node  == NULL) 
     {
         return false;
     }
+    else 
+    {
+        if (node->getNext() != NULL)
+        {
+            prev->setNext(node->getNext());
+        }
+        node = NULL;
+        return true;
+    }
+    return false;
 }
