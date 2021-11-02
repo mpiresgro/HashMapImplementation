@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.7)
+cmake_minimum_required(VERSION 3.1)
 
 project( HashMapTest )
 
@@ -39,7 +39,8 @@ add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
 
 # source for the test executable
 set  (HASHMAP_TEST_SOURCES
-    "src/main_test.cpp")
+    "src/main_test.cpp"
+    "src/add_tests.cpp")
 
 source_group("src" FILES ${HASHMAP_TEST_SOURCES})
 		
