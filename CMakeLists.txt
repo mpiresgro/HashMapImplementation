@@ -1,23 +1,12 @@
-# Set the minimum version of CMake that can be used
-# To find the cmake version run
-# $ cmake --version
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.7)
 
-# Set the project name
-project (hashMapImpl)
+project( HashMap )
 
-# Create a sources variable with a link to all cpp files to compile
-set(SOURCES
-    src/hashMap.cpp
-    src/main.cpp
-)
+# Turn on the ability to create folders to organize projects (.vcproj)
+# It creates "CMakePredefinedTargets" folder by default and adds CMake
+# defined projects like INSTALL.vcproj and ZERO_CHECK.vcproj
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-# Add an executable with the above sources
-add_executable(hashMapImpl ${SOURCES})
-
-# Set the directories that should be included in the build command for this target
-# when running g++ these will be included as -I/directory/path/
-target_include_directories(hashMapImpl
-    PRIVATE 
-        ${PROJECT_SOURCE_DIR}/include
-)
+# Sub-directories where more CMakeLists.txt exist
+add_subdirectory(HashMapLib)
+add_subdirectory(HashMapTest)
