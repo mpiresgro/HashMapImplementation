@@ -14,14 +14,12 @@ int main()
     Person vasjf = {.name = "Vasjf Vbas ", .age = 922};
     Person dsca = {.name = "Dsca Vaeq", .age = 62};
 
-    // std::vector<Person> people = {mauro, qwerty, das, asc, vasjf, dsca};
-
-    // for (auto p : people)
-    //     hash.add(p.name, &p);
-
-
-    hash.add(mauro.name, "Pires");
-    hash.add(qwerty.name, "Data");
+    std::vector<Person> people = {mauro, qwerty, das, asc, vasjf, dsca};
+    for (int i = 0; i < people.size(); i++)
+    {
+        hash.add(people[i].name, &people[i]);
+    }
+    
 
     hash.print();
     std::cout << "\tDONE" << std::endl;
