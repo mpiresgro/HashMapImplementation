@@ -1,27 +1,23 @@
 #include <gtest/gtest.h>
-#include <vector>
 
 #include "hashMap.h"
 
-
-TEST(HashMapAdd, test_1)
-{
-
+class HashMapAdd : public ::testing::Test {
+public:
     HashMap hash;
+    Person value = {.name = "John", .age = 28};
+};
 
-    Person mauro = {.name = "Mauro Pires", .age = 28};
-    Person qwerty = {.name = "Qwerty Treq", .age = 23};
-    Person das = {.name = "Das Treq", .age = 12};
-    Person asc = {.name = "Asc Asg", .age = 32};
-    Person vasjf = {.name = "Vasjf Vbas ", .age = 922};
-    Person dsca = {.name = "Dsca Vaeq", .age = 62};
 
-    std::vector<Person> people = {mauro, qwerty, das, asc, vasjf, dsca};
-    for (size_t i = 0; i < people.size(); i++)
-    {
-        hash.add(people[i].name, &people[i]);
-    }
-    hash.remove("Vasjf Vbas");
+TEST_F(HashMapAdd, test_add_one)
+{
+    hash.add(value.name, &value);
 
-    ASSERT_EQ(1, 2);
+    Person expected;
+    
+    bool result = hash.get(value.name, expected);
+
+    ASSERT_EQ(expected.name, "John");
+    ASSERT_EQ(expected.age, 28);
+    ASSERT_EQ(result, true);
 }

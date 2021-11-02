@@ -40,7 +40,8 @@ add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
 # source for the test executable
 set  (HASHMAP_TEST_SOURCES
     "src/main_test.cpp"
-    "src/add_tests.cpp")
+    "src/add_tests.cpp"
+    "src/get_tests.cpp")
 
 source_group("src" FILES ${HASHMAP_TEST_SOURCES})
 		
