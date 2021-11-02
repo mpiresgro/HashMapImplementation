@@ -100,6 +100,24 @@ bool HashMap::get(const std::string& key, Person& value)
     return true;
 }
 
+std::vector<std::string> HashMap::keys()
+{
+    std::vector<std::string> out = {};
+    Node *node;
+
+    for (size_t idx = 0; idx < TABLE_SIZE; idx++)
+    {
+        node = hash_table[idx];
+        while (node != NULL)
+        {
+            out.push_back(node->getKey());
+            node = node->getNext();
+        }
+    }
+
+    return out;
+}
+
 // return true if successful removal otherwise return false
 bool HashMap::remove(const std::string &key)
 {

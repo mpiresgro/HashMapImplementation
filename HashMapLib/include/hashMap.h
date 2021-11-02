@@ -1,3 +1,4 @@
+#include <vector>
 #include "node.h"
 #include "struct_types.h"
 
@@ -14,6 +15,7 @@ public:
     void print() ;
     void add(const std::string& key, Person* value);
     bool get(const std::string& key, Person& value);
+    std::vector<std::string> keys();
     bool remove(const std::string& key);
 
 private:
