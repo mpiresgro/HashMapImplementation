@@ -4,13 +4,15 @@
 #include <iostream>
 #include <vector>
 
+const int TABLE_SIZE = 10;
+
 #include "node.h"
+#include "hashFn.h"
 #include "struct_types.h"
 
-const int TABLE_SIZE = 10;
 typedef HashNode<std::string, Person *> Node;
 
-template <class KType, class VType>
+template <class KType, class VType, class HashFn = DefaultHashFn>
 class HashMap
 {
 public:
@@ -24,28 +26,18 @@ public:
     bool remove(const KType &key);
 
 private:
-    uint32_t hash_func(const KType &key) const;
+    HashFn hash_func;
     Node **hash_table;
 };
 
-template <class KType, class VType>
-uint32_t HashMap<KType, VType>::hash_func(const KType &key) const
-{
-    uint32_t sum = 0;
-    for (uint32_t i = 0; i < key.size(); i++)
-        sum += key[i];
-
-    return sum % TABLE_SIZE;
-}
-
-template <class KType, class VType>
-HashMap<KType, VType>::HashMap()
+template <class KType, class VType, class HashFn>
+HashMap<KType, VType, HashFn>::HashMap()
 {
     hash_table = new Node *[TABLE_SIZE]();
 }
 
-template <class KType, class VType>
-HashMap<KType, VType>::~HashMap()
+template <class KType, class VType, class HashFn>
+HashMap<KType, VType, HashFn>::~HashMap()
 {
     Node *prev;
     Node *node;
@@ -63,8 +55,8 @@ HashMap<KType, VType>::~HashMap()
     delete[] hash_table;
 }
 
-template <class KType, class VType>
-void HashMap<KType, VType>::print()
+template <class KType, class VType, class HashFn>
+void HashMap<KType, VType, HashFn>::print()
 {
     std::cout << "START " << std::endl;
     for (int i = 0; i < TABLE_SIZE; i++)
@@ -83,8 +75,8 @@ void HashMap<KType, VType>::print()
     std::cout << "END" << std::endl;
 }
 
-template <class KType, class VType>
-void HashMap<KType, VType>::add(const KType &key, VType *value)
+template <class KType, class VType, class HashFn>
+void HashMap<KType, VType, HashFn>::add(const KType &key, VType *value)
 {
     uint32_t hash_key = hash_func(key);
 
@@ -111,8 +103,8 @@ void HashMap<KType, VType>::add(const KType &key, VType *value)
         node->setValue(value);
 }
 
-template <class KType, class VType>
-bool HashMap<KType, VType>::get(const KType &key, VType &value)
+template <class KType, class VType, class HashFn>
+bool HashMap<KType, VType, HashFn>::get(const KType &key, VType &value)
 {
     uint32_t hash_key = hash_func(key);
 
@@ -127,8 +119,8 @@ bool HashMap<KType, VType>::get(const KType &key, VType &value)
     return true;
 }
 
-template <class KType, class VType>
-std::vector<KType> HashMap<KType, VType>::keys()
+template <class KType, class VType, class HashFn>
+std::vector<KType> HashMap<KType, VType, HashFn>::keys()
 {
     std::vector<KType> out = {};
     Node *node;
@@ -147,8 +139,8 @@ std::vector<KType> HashMap<KType, VType>::keys()
 }
 
 // return true if successful removal otherwise return false
-template <class KType, class VType>
-bool HashMap<KType, VType>::remove(const KType &key)
+template <class KType, class VType, class HashFn>
+bool HashMap<KType, VType, HashFn>::remove(const KType &key)
 {
     uint32_t hash_key = hash_func(key);
 
