@@ -18,8 +18,8 @@ public:
 
     void add(const KType &key, VType *value);
     bool get(const KType &key, VType &value);
-    std::vector<KType> keys();
-    std::vector<VType> values();
+    std::vector<KType> keys() const;
+    std::vector<VType> values() const;
     bool remove(const KType &key);
 
 private:
@@ -98,7 +98,7 @@ bool HashMap<KType, VType, HashFn>::get(const KType &key, VType &value)
 }
 
 template <class KType, class VType, class HashFn>
-std::vector<KType> HashMap<KType, VType, HashFn>::keys()
+std::vector<KType> HashMap<KType, VType, HashFn>::keys() const
 {
     std::vector<KType> out = {};
     Node *node;
@@ -117,7 +117,7 @@ std::vector<KType> HashMap<KType, VType, HashFn>::keys()
 }
 
 template <class KType, class VType, class HashFn>
-std::vector<VType> HashMap<KType, VType, HashFn>::values()
+std::vector<VType> HashMap<KType, VType, HashFn>::values() const
 {
     std::vector<VType> out = {};
     Node *node;
