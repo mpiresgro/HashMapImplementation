@@ -2,22 +2,29 @@
 #include "hashMap.h"
 #include "struct_types.cpp"
 
-class HashMapAdd : public ::testing::Test {
+class HashMapGet : public ::testing::Test {
 public:
     HashMap<std::string, Person> hash;
     Person value = {.name = "John", .age = 28};
 };
 
-
-TEST_F(HashMapAdd, test_add_one)
+TEST_F(HashMapGet, get_existing_value)
 {
     hash.add(value.name, &value);
+    Person expected; 
 
-    Person expected;
-    
     bool result = hash.get(value.name, expected);
-
+    
     ASSERT_EQ(expected.name, "John");
     ASSERT_EQ(expected.age, 28);
     ASSERT_EQ(result, true);
+}
+
+
+TEST_F(HashMapGet, get_not_existing_value)
+{
+    Person expected; 
+    bool result = hash.get(value.name, expected);
+    
+    ASSERT_EQ(result, false);
 }
