@@ -16,10 +16,10 @@ public:
     HashMap();
     ~HashMap();
 
-    void print();
     void add(const KType &key, VType *value);
     bool get(const KType &key, VType &value);
     std::vector<KType> keys();
+    std::vector<VType> values();
     bool remove(const KType &key);
 
 private:
@@ -51,26 +51,6 @@ HashMap<KType, VType, HashFn>::~HashMap()
         delete node;
     }
     delete[] hash_table;
-}
-
-template <class KType, class VType, class HashFn>
-void HashMap<KType, VType, HashFn>::print()
-{
-    std::cout << "START " << std::endl;
-    for (int i = 0; i < TABLE_SIZE; i++)
-    {
-        if (hash_table[i] == NULL)
-        {
-            std::cout << "\t" << i << "\t------------" << std::endl;
-        }
-        else
-        {
-            Node *nodeV = hash_table[i];
-            VType *value = nodeV->getValue();
-            std::cout << "\t" << i << "\t" << value->name;
-        }
-    }
-    std::cout << "END" << std::endl;
 }
 
 template <class KType, class VType, class HashFn>
@@ -129,6 +109,25 @@ std::vector<KType> HashMap<KType, VType, HashFn>::keys()
         while (node != NULL)
         {
             out.push_back(node->getKey());
+            node = node->getNext();
+        }
+    }
+
+    return out;
+}
+
+template <class KType, class VType, class HashFn>
+std::vector<VType> HashMap<KType, VType, HashFn>::values()
+{
+    std::vector<VType> out = {};
+    Node *node;
+
+    for (size_t idx = 0; idx < TABLE_SIZE; idx++)
+    {
+        node = hash_table[idx];
+        while (node != NULL)
+        {
+            out.push_back(node->getValue());
             node = node->getNext();
         }
     }
