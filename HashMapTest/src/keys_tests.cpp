@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include <algorithm>
 #include "hashMap.h"
+#include "struct_types.cpp"
 
 TEST(HashMaKeys, get_keys)
 {

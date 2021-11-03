@@ -8,9 +8,6 @@ const int TABLE_SIZE = 10;
 
 #include "node.h"
 #include "hashFn.h"
-#include "struct_types.h"
-
-typedef HashNode<std::string, Person *> Node;
 
 template <class KType, class VType, class HashFn = DefaultHashFn>
 class HashMap
@@ -27,6 +24,7 @@ public:
 
 private:
     HashFn hash_func;
+    typedef HashNode<KType, VType *> Node;
     Node **hash_table;
 };
 
@@ -68,7 +66,7 @@ void HashMap<KType, VType, HashFn>::print()
         else
         {
             Node *nodeV = hash_table[i];
-            Person *value = nodeV->getValue();
+            VType *value = nodeV->getValue();
             std::cout << "\t" << i << "\t" << value->name;
         }
     }
@@ -168,4 +166,4 @@ bool HashMap<KType, VType, HashFn>::remove(const KType &key)
     return false;
 }
 
-#endif
+#endif //_HASHMAP_H_

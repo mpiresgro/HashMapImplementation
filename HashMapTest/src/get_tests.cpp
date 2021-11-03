@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "hashMap.h"
+#include "struct_types.cpp"
 
 class HashMapGet : public ::testing::Test {
 public:
