@@ -4,7 +4,7 @@
 
 TEST(HashMaKeys, get_keys)
 {
-    HashMap hashMap;
+    HashMap<std::string, Person> hashMap;
 
     Person p1 = {.name = "p1", .age = 23};
     Person p2 = {.name = "p2", .age = 12};
@@ -31,7 +31,7 @@ TEST(HashMaKeys, get_keys)
 
 TEST(HashMaKeys, get_empyt_keys)
 {
-    HashMap hashMap;
+    HashMap<std::string, Person> hashMap;
 
     std::vector<std::string> result = hashMap.keys();
     

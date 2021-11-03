@@ -4,7 +4,7 @@
 
 class HashMapAdd : public ::testing::Test {
 public:
-    HashMap hash;
+    HashMap<std::string, Person> hash;
     Person value = {.name = "John", .age = 28};
 };
 
