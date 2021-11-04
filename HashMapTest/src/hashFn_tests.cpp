@@ -19,6 +19,18 @@ public:
 TEST(HashMapHashFn, custom_hashFn)
 {
     HashMap<int, std::string, CustomHashFn> hashmap;
+
+    int key = 123;
+    std::string value = "Value";
+
+    hashmap.add(key, &value);
+
+    std::string expected;
+
+    bool result = hashmap.get(key, expected);
+
+    ASSERT_EQ(expected, "Value");
+    ASSERT_EQ(result, true);
 }
 
 TEST(HashMapHashFn, int_key)
