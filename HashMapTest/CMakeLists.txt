@@ -44,7 +44,8 @@ set  (HASHMAP_TEST_SOURCES
     "src/keys_tests.cpp"
     "src/get_tests.cpp"
     "src/hashFn_tests.cpp"
-    "src/size_tests.cpp")
+    "src/size_tests.cpp"
+    "src/clear_tests.cpp")
 
 source_group("src" FILES ${HASHMAP_TEST_SOURCES})
 		
