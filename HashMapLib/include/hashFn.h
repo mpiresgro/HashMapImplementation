@@ -4,6 +4,7 @@ class HashFnBase
 {
 public:
     virtual uint32_t operator()(const std::string &key) = 0;
+    virtual uint32_t operator()(const int &key) = 0;
 };
 
 class DefaultHashFn : public HashFnBase
@@ -16,5 +17,10 @@ public:
             sum += key[i];
 
         return sum % TABLE_SIZE;
+    }
+
+    uint32_t operator()(const int &key)
+    {
+        return key % TABLE_SIZE;
     }
 };
