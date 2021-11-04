@@ -172,6 +172,20 @@ void HashMap<KType, VType, HashFn>::clear()
 template <class KType, class VType, class HashFn>
 int HashMap<KType, VType, HashFn>::size() const
 {
+    int size = 0; 
+    Node *node;
+
+    for (size_t idx = 0; idx < TABLE_SIZE; idx++)
+    {
+        node = hash_table[idx];
+        while (node != NULL)
+        {
+            size++;
+            node = node->getNext();
+        }
+    }
+
+    return size;
 }
 
 //  remove function - Delete node from HashMap
