@@ -9,6 +9,11 @@ const int TABLE_SIZE = 10;
 #include "node.h"
 #include "hashFn.h"
 
+//  HashMap
+//  C++ implementation of a HashMap
+//  @tparam [KType] Key Type
+//  @tparam [VType] Value Type
+//  @tparam [HashFn] Hash function to use - defaults to DefaultHashFn
 template <class KType, class VType, class HashFn = DefaultHashFn>
 class HashMap
 {
@@ -20,6 +25,8 @@ public:
     bool get(const KType &key, VType &value);
     std::vector<KType> keys() const;
     std::vector<VType> values() const;
+    void clear();
+    int size() const;
     bool remove(const KType &key);
 
 private:
@@ -28,12 +35,17 @@ private:
     Node **hash_table;
 };
 
+//  HashMap Constructor function
+//  Allocates memory for hash_table
 template <class KType, class VType, class HashFn>
 HashMap<KType, VType, HashFn>::HashMap()
 {
     hash_table = new Node *[TABLE_SIZE]();
 }
 
+//  HashMap Destructor function
+//  Clean and deallocate the memory that was previously reserved
+//  for hash_table.
 template <class KType, class VType, class HashFn>
 HashMap<KType, VType, HashFn>::~HashMap()
 {
@@ -53,6 +65,11 @@ HashMap<KType, VType, HashFn>::~HashMap()
     delete[] hash_table;
 }
 
+//  add function - Add key and value entry. 
+//  Finds an empty bucket and adds node. 
+//  If node with same key already exists updates value.
+//  @param [key] of type <KType>
+//  @param [value] of type <VType>
 template <class KType, class VType, class HashFn>
 void HashMap<KType, VType, HashFn>::add(const KType &key, VType *value)
 {
@@ -81,6 +98,11 @@ void HashMap<KType, VType, HashFn>::add(const KType &key, VType *value)
         node->setValue(value);
 }
 
+//  get function - Get value from HashMap. 
+//  Finds bucket matching key and gets value 
+//  @return true if bucket exists otherwise returns false.
+//  @param [key] of type <KType>
+//  @param [value] of type <VType>
 template <class KType, class VType, class HashFn>
 bool HashMap<KType, VType, HashFn>::get(const KType &key, VType &value)
 {
@@ -97,6 +119,8 @@ bool HashMap<KType, VType, HashFn>::get(const KType &key, VType &value)
     return true;
 }
 
+//  keys function 
+//  @return vector with all keys  
 template <class KType, class VType, class HashFn>
 std::vector<KType> HashMap<KType, VType, HashFn>::keys() const
 {
@@ -116,6 +140,8 @@ std::vector<KType> HashMap<KType, VType, HashFn>::keys() const
     return out;
 }
 
+//  values function 
+//  @return vector with all values  
 template <class KType, class VType, class HashFn>
 std::vector<VType> HashMap<KType, VType, HashFn>::values() const
 {
@@ -135,7 +161,22 @@ std::vector<VType> HashMap<KType, VType, HashFn>::values() const
     return out;
 }
 
-// return true if successful removal otherwise return false
+//  clear function - Deletes all entries in HashMap  
+template <class KType, class VType, class HashFn>
+void HashMap<KType, VType, HashFn>::clear()
+{
+}
+
+//  size function 
+//  @return number of entries in HashMap
+template <class KType, class VType, class HashFn>
+int HashMap<KType, VType, HashFn>::size() const
+{
+}
+
+//  remove function - Delete node from HashMap
+//  @param [key] of type <KType>
+//  @return true if node successfully removed otherwise return false
 template <class KType, class VType, class HashFn>
 bool HashMap<KType, VType, HashFn>::remove(const KType &key)
 {
@@ -162,7 +203,6 @@ bool HashMap<KType, VType, HashFn>::remove(const KType &key)
         node = NULL;
         return true;
     }
-    return false;
 }
 
 #endif //_HASHMAP_H_
