@@ -49,19 +49,7 @@ HashMap<KType, VType, HashFn>::HashMap()
 template <class KType, class VType, class HashFn>
 HashMap<KType, VType, HashFn>::~HashMap()
 {
-    Node *prev;
-    Node *node;
-    for (int i = 0; i < TABLE_SIZE; i++)
-    {
-        node = hash_table[i];
-        while (node != NULL)
-        {
-            prev = node;
-            node = node->getNext();
-            delete prev;
-        };
-        delete node;
-    }
+    clear();
     delete[] hash_table;
 }
 
@@ -165,6 +153,20 @@ std::vector<VType> HashMap<KType, VType, HashFn>::values() const
 template <class KType, class VType, class HashFn>
 void HashMap<KType, VType, HashFn>::clear()
 {
+    Node *prev;
+    Node *node;
+    for (int i = 0; i < TABLE_SIZE; i++)
+    {
+        node = hash_table[i];
+        while (node != NULL)
+        {
+            prev = node;
+            node = node->getNext();
+            delete prev;
+        };
+        delete node;
+        hash_table[i] = NULL;
+    }
 }
 
 //  size function 
