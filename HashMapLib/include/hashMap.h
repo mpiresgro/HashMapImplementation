@@ -53,8 +53,8 @@ HashMap<KType, VType, HashFn>::~HashMap()
     delete[] hash_table;
 }
 
-//  add function - Add key and value entry. 
-//  Finds an empty bucket and adds node. 
+//  add function - Add key and value entry.
+//  Finds an empty bucket and adds node.
 //  If node with same key already exists updates value.
 //  @param [key] of type <KType>
 //  @param [value] of type <VType>
@@ -86,8 +86,8 @@ void HashMap<KType, VType, HashFn>::add(const KType &key, VType *value)
         node->setValue(value);
 }
 
-//  get function - Get value from HashMap. 
-//  Finds bucket matching key and gets value 
+//  get function - Get value from HashMap.
+//  Finds bucket matching key and gets value
 //  @return true if bucket exists otherwise returns false.
 //  @param [key] of type <KType>
 //  @param [value] of type <VType>
@@ -107,13 +107,13 @@ bool HashMap<KType, VType, HashFn>::get(const KType &key, VType &value)
     return true;
 }
 
-//  keys function 
-//  @return vector with all keys  
+//  keys function
+//  @return vector with all keys
 template <class KType, class VType, class HashFn>
 std::vector<KType> HashMap<KType, VType, HashFn>::keys() const
 {
     std::vector<KType> out = {};
-    Node *node;
+    Node *node = NULL;
 
     for (size_t idx = 0; idx < TABLE_SIZE; idx++)
     {
@@ -128,13 +128,13 @@ std::vector<KType> HashMap<KType, VType, HashFn>::keys() const
     return out;
 }
 
-//  values function 
-//  @return vector with all values  
+//  values function
+//  @return vector with all values
 template <class KType, class VType, class HashFn>
 std::vector<VType> HashMap<KType, VType, HashFn>::values() const
 {
     std::vector<VType> out = {};
-    Node *node;
+    Node *node = NULL;
 
     for (size_t idx = 0; idx < TABLE_SIZE; idx++)
     {
@@ -149,12 +149,12 @@ std::vector<VType> HashMap<KType, VType, HashFn>::values() const
     return out;
 }
 
-//  clear function - Deletes all entries in HashMap  
+//  clear function - Deletes all entries in HashMap
 template <class KType, class VType, class HashFn>
 void HashMap<KType, VType, HashFn>::clear()
 {
-    Node *prev;
-    Node *node;
+    Node *prev = NULL;
+    Node *node = NULL;
     for (int i = 0; i < TABLE_SIZE; i++)
     {
         node = hash_table[i];
@@ -169,13 +169,13 @@ void HashMap<KType, VType, HashFn>::clear()
     }
 }
 
-//  size function 
+//  size function
 //  @return number of entries in HashMap
 template <class KType, class VType, class HashFn>
 int HashMap<KType, VType, HashFn>::size() const
 {
-    int size = 0; 
-    Node *node;
+    int size = 0;
+    Node *node = NULL;
 
     for (size_t idx = 0; idx < TABLE_SIZE; idx++)
     {
@@ -186,7 +186,6 @@ int HashMap<KType, VType, HashFn>::size() const
             node = node->getNext();
         }
     }
-
     return size;
 }
 
