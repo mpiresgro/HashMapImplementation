@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <assert.h>
 
 const int TABLE_SIZE = 10;
 
@@ -33,14 +34,16 @@ private:
     HashFn hash_func;
     typedef HashNode<KType, VType *> Node;
     Node **hash_table;
+    int m_size;
 };
 
 //  HashMap Constructor function
-//  Allocates memory for hash_table
+//  Allocates memory for hash_table and initializes m_size to zero
 template <class KType, class VType, class HashFn>
 HashMap<KType, VType, HashFn>::HashMap()
 {
     hash_table = new Node *[TABLE_SIZE]();
+    m_size = 0;
 }
 
 //  HashMap Destructor function
@@ -76,7 +79,7 @@ void HashMap<KType, VType, HashFn>::add(const KType &key, VType *value)
     {
         // Create new node
         node = new Node(key, value);
-
+        m_size++;
         if (prev == NULL)
             hash_table[hash_key] = node;
         else
@@ -163,10 +166,13 @@ void HashMap<KType, VType, HashFn>::clear()
             prev = node;
             node = node->getNext();
             delete prev;
+            m_size--;
         };
         delete node;
         hash_table[i] = NULL;
     }
+
+    assert(m_size == 0);
 }
 
 //  size function
@@ -174,19 +180,7 @@ void HashMap<KType, VType, HashFn>::clear()
 template <class KType, class VType, class HashFn>
 int HashMap<KType, VType, HashFn>::size() const
 {
-    int size = 0;
-    Node *node = NULL;
-
-    for (size_t idx = 0; idx < TABLE_SIZE; idx++)
-    {
-        node = hash_table[idx];
-        while (node != NULL)
-        {
-            size++;
-            node = node->getNext();
-        }
-    }
-    return size;
+    return m_size;
 }
 
 //  remove function - Delete node from HashMap
@@ -211,11 +205,16 @@ bool HashMap<KType, VType, HashFn>::remove(const KType &key)
     }
     else
     {
-        if (node->getNext() != NULL)
+        if (prev == NULL) 
+        {
+            hash_table[hash_key] = node->getNext();
+        }
+        else
         {
             prev->setNext(node->getNext());
         }
-        node = NULL;
+        m_size--;
+        delete node;
         return true;
     }
 }
