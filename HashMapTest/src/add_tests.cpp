@@ -27,7 +27,7 @@ public:
 };
 
 
-TEST_F(HashMapAdd, test_add_one)
+TEST_F(HashMapAdd, add_one)
 {
     hash.add(value1.name, &value1);
 
@@ -42,7 +42,7 @@ TEST_F(HashMapAdd, test_add_one)
 
 
 
-TEST_F(HashMapAdd, test_add_many)
+TEST_F(HashMapAdd, add_many)
 {
     hash.add(value1.name, &value1);
     hash.add(value2.name, &value2);
@@ -68,7 +68,7 @@ TEST_F(HashMapAdd, test_add_many)
 }
 
 
-TEST_F(HashMapAdd, test_add_many_in_same_node)
+TEST_F(HashMapAdd, add_many_in_same_node)
 {
     HashMap<std::string, Person, CustomHashFn> custom_hash;
 
