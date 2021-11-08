@@ -43,7 +43,10 @@ set  (HASHMAP_TEST_SOURCES
     "src/add_tests.cpp"
     "src/keys_tests.cpp"
     "src/get_tests.cpp"
-    "src/hashFn_tests.cpp")
+    "src/hashFn_tests.cpp"
+    "src/size_tests.cpp"
+    "src/clear_tests.cpp"
+    "src/remove_tests.cpp")
 
 source_group("src" FILES ${HASHMAP_TEST_SOURCES})
 		
