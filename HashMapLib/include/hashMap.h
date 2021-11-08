@@ -66,21 +66,21 @@ void HashMap<KType, VType, HashFn>::add(const KType &key, VType *value)
 {
     uint32_t hash_key = hash_func(key);
 
-    Node *prev = NULL;
+    Node *prev = nullptr;
     Node *node = hash_table[hash_key];
 
-    while (node != NULL && node->getKey() != key)
+    while (node != nullptr && node->getKey() != key)
     {
         prev = node;
         node = node->getNext();
     }
 
-    if (node == NULL)
+    if (node == nullptr)
     {
         // Create new node
         node = new Node(key, value);
         m_size++;
-        if (prev == NULL)
+        if (prev == nullptr)
             hash_table[hash_key] = node;
         else
             prev->setNext(node);
@@ -100,10 +100,10 @@ bool HashMap<KType, VType, HashFn>::get(const KType &key, VType &value)
     uint32_t hash_key = hash_func(key);
 
     Node *node = hash_table[hash_key];
-    while (node != NULL && node->getKey() != key)
+    while (node != nullptr && node->getKey() != key)
         node = node->getNext();
 
-    if (node == NULL)
+    if (node == nullptr)
         return false;
 
     value = *node->getValue();
@@ -116,12 +116,12 @@ template <class KType, class VType, class HashFn>
 std::vector<KType> HashMap<KType, VType, HashFn>::keys() const
 {
     std::vector<KType> out = {};
-    Node *node = NULL;
+    Node *node = nullptr;
 
     for (size_t idx = 0; idx < TABLE_SIZE; idx++)
     {
         node = hash_table[idx];
-        while (node != NULL)
+        while (node != nullptr)
         {
             out.push_back(node->getKey());
             node = node->getNext();
@@ -137,12 +137,12 @@ template <class KType, class VType, class HashFn>
 std::vector<VType> HashMap<KType, VType, HashFn>::values() const
 {
     std::vector<VType> out = {};
-    Node *node = NULL;
+    Node *node = nullptr;
 
     for (size_t idx = 0; idx < TABLE_SIZE; idx++)
     {
         node = hash_table[idx];
-        while (node != NULL)
+        while (node != nullptr)
         {
             out.push_back(node->getValue());
             node = node->getNext();
@@ -156,12 +156,12 @@ std::vector<VType> HashMap<KType, VType, HashFn>::values() const
 template <class KType, class VType, class HashFn>
 void HashMap<KType, VType, HashFn>::clear()
 {
-    Node *prev = NULL;
-    Node *node = NULL;
+    Node *prev = nullptr;
+    Node *node = nullptr;
     for (int i = 0; i < TABLE_SIZE; i++)
     {
         node = hash_table[i];
-        while (node != NULL)
+        while (node != nullptr)
         {
             prev = node;
             node = node->getNext();
@@ -169,7 +169,7 @@ void HashMap<KType, VType, HashFn>::clear()
             m_size--;
         };
         delete node;
-        hash_table[i] = NULL;
+        hash_table[i] = nullptr;
     }
 
     assert(m_size == 0);
@@ -191,21 +191,21 @@ bool HashMap<KType, VType, HashFn>::remove(const KType &key)
 {
     uint32_t hash_key = hash_func(key);
 
-    Node *prev = NULL;
+    Node *prev = nullptr;
     Node *node = hash_table[hash_key];
 
-    while (node != NULL && node->getKey() != key)
+    while (node != nullptr && node->getKey() != key)
     {
         prev = node;
         node = node->getNext();
     }
-    if (node == NULL)
+    if (node == nullptr)
     {
         return false;
     }
     else
     {
-        if (prev == NULL) 
+        if (prev == nullptr) 
         {
             hash_table[hash_key] = node->getNext();
         }
